@@ -1,7 +1,7 @@
 ﻿#pragma once
 /**
  * @file logger.h
- * @brief Engine::Logger – High-performance, thread-safe logging system (C++23)
+ * @brief Gem::Logger – High-performance, thread-safe logging system (C++23)
  * @version 4.0.1 - Production-ready implementation with all fixes applied
  *
  * Features:
@@ -95,7 +95,7 @@ inline constexpr std::size_t hardware_destructive_interference_size = 64; // Con
 #endif
 #endif
 
-namespace Engine
+namespace Gem
 {
     // Forward declarations
     struct LogRecord;
@@ -2183,56 +2183,56 @@ namespace Engine
 
 // Convenience macros (minimal set)
 
-#define LOG_TRACE(msg, ...)    ::Engine::Logger::trace(msg, ##__VA_ARGS__)
-#define LOG_DEBUG(msg, ...)    ::Engine::Logger::debug(msg, ##__VA_ARGS__)
-#define LOG_INFO(msg, ...)     ::Engine::Logger::info(msg, ##__VA_ARGS__)
-#define LOG_SUCCESS(msg, ...)  ::Engine::Logger::success(msg, ##__VA_ARGS__)
-#define LOG_WARNING(msg, ...)  ::Engine::Logger::warning(msg, ##__VA_ARGS__)
-#define LOG_ERROR(msg, ...)    ::Engine::Logger::error(msg, ##__VA_ARGS__)
-#define LOG_CRITICAL(msg, ...) ::Engine::Logger::critical(msg, ##__VA_ARGS__)
+#define LOG_TRACE(msg, ...)    ::Gem::Logger::trace(msg, ##__VA_ARGS__)
+#define LOG_DEBUG(msg, ...)    ::Gem::Logger::debug(msg, ##__VA_ARGS__)
+#define LOG_INFO(msg, ...)     ::Gem::Logger::info(msg, ##__VA_ARGS__)
+#define LOG_SUCCESS(msg, ...)  ::Gem::Logger::success(msg, ##__VA_ARGS__)
+#define LOG_WARNING(msg, ...)  ::Gem::Logger::warning(msg, ##__VA_ARGS__)
+#define LOG_ERROR(msg, ...)    ::Gem::Logger::error(msg, ##__VA_ARGS__)
+#define LOG_CRITICAL(msg, ...) ::Gem::Logger::critical(msg, ##__VA_ARGS__)
 
 #define LOGGER_SETUP_DEV() \
     do { \
-        auto result = ::Engine::Logger::instance().add_handler( \
-            ::Engine::ConfigTemplate::builder() \
+        auto result = ::Gem::Logger::instance().add_handler( \
+            ::Gem::ConfigTemplate::builder() \
                 .name("console") \
-                .level(::Engine::LogLevel::Debug) \
+                .level(::Gem::LogLevel::Debug) \
                 .format("simple", "%(levelname): %(message)") \
-                .output("simple", ::Engine::StreamTarget::cout()) \
+                .output("simple", ::Gem::StreamTarget::cout()) \
                 .build() \
         ); \
-        result.if_err([](::Engine::ConfigError err) { \
+        result.if_err([](::Gem::ConfigError err) { \
             std::cerr << "[Logger] Failed to setup dev config\n"; \
         }); \
     } while(0)
 
 #define LOGGER_SETUP_PROD() \
     do { \
-        auto result = ::Engine::Logger::instance().add_handler( \
-            ::Engine::ConfigTemplate::builder() \
+        auto result = ::Gem::Logger::instance().add_handler( \
+            ::Gem::ConfigTemplate::builder() \
                 .name("file") \
-                .level(::Engine::LogLevel::Info) \
+                .level(::Gem::LogLevel::Info) \
                 .format("detailed", "%(date) %(time) [%(levelname)] %(message)") \
                 .output("detailed", std::filesystem::path("app.log")) \
                 .structured(true) \
                 .build() \
         ); \
-        result.if_err([](::Engine::ConfigError err) { \
+        result.if_err([](::Gem::ConfigError err) { \
             std::cerr << "[Logger] Failed to setup prod config\n"; \
         }); \
     } while(0)
 
 #define LOGGER_SETUP_MULTI_WORKER(N) \
     do { \
-        auto result = ::Engine::MultiWorkerLogger<N>::instance().add_handler( \
-            ::Engine::ConfigTemplate::builder() \
+        auto result = ::Gem::MultiWorkerLogger<N>::instance().add_handler( \
+            ::Gem::ConfigTemplate::builder() \
                 .name("high_perf") \
-                .level(::Engine::LogLevel::Info) \
+                .level(::Gem::LogLevel::Info) \
                 .format("simple", "%(levelname): %(message)") \
-                .output("simple", ::Engine::StreamTarget::cout()) \
+                .output("simple", ::Gem::StreamTarget::cout()) \
                 .build() \
         ); \
-        result.if_err([](::Engine::ConfigError err) { \
+        result.if_err([](::Gem::ConfigError err) { \
             std::cerr << "[Logger] Failed to setup multi-worker config\n"; \
         }); \
     } while(0)
@@ -2241,9 +2241,9 @@ namespace Engine
 
 #ifdef LOGGER_SELF_TEST
 
-static_assert(sizeof(Engine::LogLevel) == 1, "LogLevel should be 1 byte");
-static_assert(std::is_trivially_copyable_v<Engine::LogLevel>);
-static_assert(std::is_nothrow_move_constructible_v<Engine::StreamTarget>);
+static_assert(sizeof(Gem::LogLevel) == 1, "LogLevel should be 1 byte");
+static_assert(std::is_trivially_copyable_v<Gem::LogLevel>);
+static_assert(std::is_nothrow_move_constructible_v<Gem::StreamTarget>);
 
 inline int test_logger_main()
 {
