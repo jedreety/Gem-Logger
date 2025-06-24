@@ -2179,7 +2179,7 @@ namespace Gem
     template<std::size_t N>
     using MultiWorkerLogger = LoggerImpl<N>;
 
-} // namespace Engine
+} // namespace Gem
 
 // Convenience macros (minimal set)
 
