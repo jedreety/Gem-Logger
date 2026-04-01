@@ -1,4 +1,5 @@
 #pragma once
+
 // Gem::Logger – Thread-safe logging system (C++23)
 // 7 levels, @{key} interpolation, JSON output, color DSL, file rotation, lock-free queue
 
@@ -969,10 +970,54 @@ namespace Gem
 
 // ── Macros ───────────────────────────────────────────────────────
 
-#define LOG_TRACE(msg, ...)    ::Gem::Logger::trace(msg, ##__VA_ARGS__)
-#define LOG_DEBUG(msg, ...)    ::Gem::Logger::debug(msg, ##__VA_ARGS__)
-#define LOG_INFO(msg, ...)     ::Gem::Logger::info(msg, ##__VA_ARGS__)
-#define LOG_SUCCESS(msg, ...)  ::Gem::Logger::success(msg, ##__VA_ARGS__)
-#define LOG_WARNING(msg, ...)  ::Gem::Logger::warning(msg, ##__VA_ARGS__)
-#define LOG_ERROR(msg, ...)    ::Gem::Logger::error(msg, ##__VA_ARGS__)
-#define LOG_CRITICAL(msg, ...) ::Gem::Logger::critical(msg, ##__VA_ARGS__)
+#ifndef GEMLOG_LEVEL
+#   define GEMLOG_LEVEL 0
+#endif
+
+#if GEMLOG_LEVEL <= 0
+#   define LOG_TRACE(msg, ...)    ::Gem::Logger::trace(msg, ##__VA_ARGS__)
+#else
+#   define LOG_TRACE(msg, ...)    ((void)0)
+#endif
+
+#if GEMLOG_LEVEL <= 1
+#   define LOG_DEBUG(msg, ...)    ::Gem::Logger::debug(msg, ##__VA_ARGS__)
+#   define LOG_INFO(msg, ...)     ::Gem::Logger::info(msg, ##__VA_ARGS__)
+#   define LOG_SUCCESS(msg, ...)  ::Gem::Logger::success(msg, ##__VA_ARGS__)
+#else
+#   define LOG_DEBUG(msg, ...)    ((void)0)
+#   define LOG_INFO(msg, ...)     ((void)0)
+#   define LOG_SUCCESS(msg, ...)  ((void)0)
+#endif
+
+#if GEMLOG_LEVEL <= 2
+#   define LOG_WARNING(msg, ...)  ::Gem::Logger::warning(msg, ##__VA_ARGS__)
+#   define LOG_ERROR(msg, ...)    ::Gem::Logger::error(msg, ##__VA_ARGS__)
+#else
+#   define LOG_WARNING(msg, ...)  ((void)0)
+#   define LOG_ERROR(msg, ...)    ((void)0)
+#endif
+
+#if GEMLOG_LEVEL <= 3
+#   define LOG_CRITICAL(msg, ...) ::Gem::Logger::critical(msg, ##__VA_ARGS__)
+#else
+#   define LOG_CRITICAL(msg, ...) ((void)0)
+#endif
+
+#ifdef GEMLOG_SIMPLE_HANDLER_CONSOLE
+namespace Gem::detail {
+    inline const auto gemlog_console_init_ = [] {
+        Logger::instance().add_handler(
+            ConfigTemplate::builder()
+            .name("console")
+            .level(LogLevel::Trace)
+            .format("colored",
+                "<bold>[%(levelname)]</bold> %(time) | %(message) "
+                "<dim>(%(file):%(line))</dim>")
+            .output("colored", StreamTarget::cout())
+            .build()
+        );
+        return 0;
+        }();
+}
+#endif
