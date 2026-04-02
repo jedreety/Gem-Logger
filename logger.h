@@ -1007,7 +1007,7 @@ namespace Gem
 #ifdef GEMLOG_SIMPLE_HANDLER_CONSOLE
 namespace Gem::detail {
     inline const auto gemlog_console_init_ = [] {
-        Logger::instance().add_handler(
+        (void)Logger::instance().add_handler(
             ConfigTemplate::builder()
             .name("console")
             .level(LogLevel::Trace)
