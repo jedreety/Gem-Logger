@@ -1,0 +1,62 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="840" height="276" viewBox="0 0 840 276" role="img" aria-label="Gem Logger output in a terminal">
+  <title>Gem Logger output in a terminal</title>
+  <style>
+    text { font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace; font-size: 14px; fill: #e6edf3; }
+    .dim { fill: #7d8590; }
+    .bold { font-weight: 700; }
+    .prompt { fill: #3fb950; font-weight: 700; }
+    .debug { fill: #39c5cf; }
+    .success { fill: #3fb950; font-weight: 700; }
+    .green { fill: #3fb950; }
+    .warning { fill: #d29922; font-weight: 700; }
+    .error { fill: #f85149; font-weight: 700; }
+    .critical { fill: #ffffff; font-weight: 700; }
+  </style>
+
+  <rect x="0.5" y="0.5" width="839" height="275" rx="12" fill="#0d1117" stroke="#30363d"/>
+  <circle cx="22" cy="20" r="6" fill="#ff5f57"/>
+  <circle cx="42" cy="20" r="6" fill="#febc2e"/>
+  <circle cx="62" cy="20" r="6" fill="#28c840"/>
+
+  <!-- one column = 8.4 px, from x = 24 -->
+  <text x="24" y="66" textLength="8.4" class="prompt">$</text>
+  <text x="40.8" y="66" textLength="50.4">./game</text>
+
+  <text x="24" y="94" textLength="100.8" class="dim">14:32:01.123</text>
+  <text x="133.2" y="94" textLength="33.6" class="bold">INFO</text>
+  <text x="208.8" y="94" textLength="243.6">Server listening on port 8080</text>
+  <text x="460.8" y="94" textLength="109.2" class="dim">(main.cpp:12)</text>
+
+  <text x="24" y="120" textLength="100.8" class="dim">14:32:01.124</text>
+  <text x="133.2" y="120" textLength="58.8" class="success">SUCCESS</text>
+  <text x="208.8" y="120" textLength="50.4">Loaded</text>
+  <text x="267.6" y="120" textLength="25.2" class="green">128</text>
+  <text x="301.2" y="120" textLength="67.2">textures</text>
+  <text x="376.8" y="120" textLength="126" class="dim">(assets.cpp:41)</text>
+
+  <text x="24" y="146" textLength="100.8" class="dim">14:32:01.125</text>
+  <text x="133.2" y="146" textLength="42" class="debug">DEBUG</text>
+  <text x="208.8" y="146" textLength="470.4">player.x = 3, player.y = 7, inventory = ["sword", "map"]</text>
+  <text x="687.6" y="146" textLength="109.2" class="dim">(game.cpp:88)</text>
+
+  <text x="24" y="172" textLength="100.8" class="dim">14:32:01.126</text>
+  <text x="133.2" y="172" textLength="58.8" class="warning">WARNING</text>
+  <text x="208.8" y="172" textLength="42" class="dim">[net]</text>
+  <text x="259.2" y="172" textLength="168">Timeout after 250 ms</text>
+  <text x="435.6" y="172" textLength="100.8" class="dim">{request=42}</text>
+  <text x="544.8" y="172" textLength="126" class="dim">(client.cpp:57)</text>
+
+  <text x="24" y="198" textLength="100.8" class="dim">14:32:01.127</text>
+  <text x="133.2" y="198" textLength="42" class="error">ERROR</text>
+  <text x="208.8" y="198" textLength="327.6">Cannot open save.dat: Permission denied</text>
+  <text x="544.8" y="198" textLength="109.2" class="dim">(save.cpp:19)</text>
+
+  <rect x="131.2" y="209" width="71.2" height="19" rx="3" fill="#da3633"/>
+  <text x="24" y="224" textLength="100.8" class="dim">14:32:01.127</text>
+  <text x="133.2" y="224" textLength="67.2" class="critical">CRITICAL</text>
+  <text x="208.8" y="224" textLength="126">GPU device lost</text>
+  <text x="343.2" y="224" textLength="151.2" class="dim">(renderer.cpp:203)</text>
+
+  <text x="24" y="250" textLength="117.6" class="bold">Build finished</text>
+  <text x="150" y="250" textLength="75.6">in 1.84 s</text>
+</svg>
